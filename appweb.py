@@ -20,7 +20,7 @@ def login():
         else:
             return '登录失败'
     else:
-        return render_template('index.html')
+        return render_template('login.html')
 
 if __name__ == '__main__':
     app.run(host='127.0.0.1',port=80)
