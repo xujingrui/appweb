@@ -12,7 +12,7 @@ app.config.from_object(config)
 def home():
     return render_template('base.html')
 
-@app.route('/login',methods=['GET','POST'])
+@app.route('/login/',methods=['GET','POST'])
 def login():
     if request.method == 'POST':
         if request.form.get('username') == 'admin':
