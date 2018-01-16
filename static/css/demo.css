@@ -59,3 +59,9 @@ body{
 	background: #fff;
 	border-radius:15px;
 }
+
+.user_button {
+    margin: 0 auto;
+	line-height: 3;
+
+}
