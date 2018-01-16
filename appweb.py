@@ -16,7 +16,7 @@ def home():
 def login():
     if request.method == 'POST':
         if request.form.get('username') == 'admin':
-            return render_template('base.html')
+            return render_template('home.html')
         else:
             return '登录失败'
     else:

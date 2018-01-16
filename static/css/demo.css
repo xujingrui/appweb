@@ -60,8 +60,16 @@ body{
 	border-radius:15px;
 }
 
+.user_button_gps {
+    margin:130px auto;
+}
+.user_button_gps .modal-content {
+ 	border-radius:35px;
+}
+
+
 .user_button {
     margin: 0 auto;
 	line-height: 3;
-
+    text-align: center;
 }
