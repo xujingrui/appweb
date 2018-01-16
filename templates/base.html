@@ -80,13 +80,13 @@
                             </div>
                         </li>
                         <li class="sidebar-dropdown">
-                            <a href="#"><i class="fa fa-diamond"></i><span>系统监控</span></a>
+                            <a href="#"><i class="fa fa-diamond"></i><span>系统管理</span></a>
                             <div class="sidebar-submenu">
                                 <ul>
-                                    <li><a href="#">submenu 1</a></li>
-                                    <li><a href="#">submenu 2</a></li>
-                                    <li><a href="#">submenu 3</a></li>
-                                    <li><a href="#">submenu 4</a></li>
+                                    <li><a href="{{ url_for('user',id='user_list') }}">用户列表</a></li>
+                                    <li><a href="#">权限管理</a></li>
+                                    <li><a href="#">操作记录</a></li>
+                                    <li><a href="#">登录日志</a></li>
                                 </ul>
                             </div>
                         </li>
@@ -94,7 +94,7 @@
                         <li><a href="{{ url_for('CMDB') }}"><i class="fa fa-tv"></i><span>CMDB</span></a></li>
                         <li><a href="#"><i class="fa fa-photo"></i><span>安全管理</span></a></li>
                         <li><a href="#"><i class="fa fa-bar-chart-o"></i><span>系统日志</span></a></li>
-                        <li><a href="#"><i class="fa fa-diamond"></i><span>系统管理</span></a></li>
+                        <li><a href="#"><i class="fa fa-diamond"></i><span>系统监控</span></a></li>
                     </ul>
                    </div><!-- sidebar-menu  -->            
                 </div><!-- sidebar-content  -->
@@ -110,9 +110,9 @@
                 <div class="container-fluid">
 
                 <div class="data">
-                	<header class="header">
+                	<!-- <header class="header">
 						<h1>基于jquery和Bootstrap3的隐藏侧边栏 <span>Responsive sidebar template based on bootstrap framwork</span></h1>
-					</header>
+					</header>-->
 
                 {% block main %}{% endblock %}
 

@@ -23,9 +23,20 @@ def login():
         return render_template('login.html')
 
 
-@app.route('/CMDB')
+
+@app.route('/user/<id>')
+def user(id):
+    if id == 'user_list':
+        return render_template('user_list.html')
+    else:
+        return '无效'
+
+
+
+
+@app.route('/CMDB/')
 def CMDB():
-    return render_template('biaoge.html')
+    return render_template('cmdb.html')
 
 if __name__ == '__main__':
     app.run(host='127.0.0.1',port=80)
