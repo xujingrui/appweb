@@ -10,10 +10,10 @@ class UserModel(db.Model):
     username = db.Column(db.String(30),nullable=False)
     telephone = db.Column(db.String(15),nullable=False)
     password = db.Column(db.String(30),nullable=False)
-    mail = db.Column(db.string(30),nullable=False)
+    mail = db.Column(db.String(30),nullable=False)
     ctime = db.Column(db.DateTime,default=datetime.datetime.now)
-    etime = db.Column(db.string(20),nullable=True)
-    status = db.Column(db.string(10),nullable=False,default='激活')
+    etime = db.Column(db.String(20),nullable=True)
+    status = db.Column(db.String(10),nullable=False,default='aaa')
 
 
 #id,用户，登录地址，登录时间
@@ -30,13 +30,13 @@ class CmdbModel(db.Model):
     __tablename__ = 'cmdb'
     id = db.Column(db.String(100), primary_key=True)
     name = db.Column(db.String(30),nullable=False)
-    ctime = db.Column(db.string(20),nullable=True)
-    system = db.Column(db.string(20),nullable=False)
+    ctime = db.Column(db.String(20),nullable=True)
+    system = db.Column(db.String(20),nullable=False)
     ipaddr = db.Column(db.String(50),nullable=False)
     core_number = db.Column(db.String(3),nullable=False)
     memory = db.Column(db.String(3),nullable=False)
     disk = db.Column(db.String(50),nullable=False)
-    status = db.Column(db.string(10),nullable=False,default='在用')
+    status = db.Column(db.String(10),nullable=False,default='aaa')
 
 
 

@@ -4,11 +4,9 @@ from flask_migrate import Migrate,MigrateCommand
 from appweb import app
 from flask_script import Manager
 from exts import db
-import config
-#from models import UserModel,QuestionModel,AnswerModel
+from models import UserModel,UserLoginLogModel,CmdbModel
 
-app.config.from_object(config)
-db.init_app(app)
+
 
 manager = Manager(app)
 
