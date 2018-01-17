@@ -13,7 +13,7 @@ class UserModel(db.Model):
     mail = db.Column(db.String(30),nullable=False)
     ctime = db.Column(db.DateTime,default=datetime.datetime.now)
     etime = db.Column(db.String(20),nullable=True)
-    status = db.Column(db.String(10),nullable=False,default='aaa')
+    status = db.Column(db.String(10),default='激活')
 
 
 #id,用户，登录地址，登录时间
@@ -36,7 +36,7 @@ class CmdbModel(db.Model):
     core_number = db.Column(db.String(3),nullable=False)
     memory = db.Column(db.String(3),nullable=False)
     disk = db.Column(db.String(50),nullable=False)
-    status = db.Column(db.String(10),nullable=False,default='aaa')
+    status = db.Column(db.String(10),default='在用')
 
 
 

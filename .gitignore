@@ -102,3 +102,5 @@ ENV/
 
 #数据库迁移
 migrations/
+
+test.py

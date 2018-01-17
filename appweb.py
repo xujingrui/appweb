@@ -2,10 +2,12 @@
 from flask import Flask,render_template,url_for,redirect
 import config
 from flask import request
+from models import UserModel
+from exts import db
 
 app = Flask(__name__)
 app.config.from_object(config)
-
+db.init_app(app)
 
 
 @app.route('/')
@@ -24,10 +26,29 @@ def login():
 
 
 
-@app.route('/user/<id>')
+@app.route('/user/<id>',methods=['GET','POST'])
 def user(id):
     if id == 'user_list':
-        return render_template('user_list.html')
+        if request.method == 'POST':
+            username = request.form.get('username1')
+            telephone = request.form.get('telephone')
+            mail = request.form.get('mail')
+            password1 = request.form.get('password1')
+            password2 = request.form.get('password2')
+            if password1 != password2 :
+                return u'两次密码输入错误，请重新填写！'
+            else:
+                user = UserModel(username=username,telephone=telephone,mail=mail,password=password1,status='激活')
+                db.session.add(user)
+                db.session.commit()
+                return '注册成功'
+        else:
+            items = UserModel.query.all()[:]
+            lens = range(1,len(items) +1)
+            print lens
+            return render_template('user_list.html',items=items,lens=lens)
+
+
     if id == 'user_login_log':
         return render_template('user_login_log.html')
     else:

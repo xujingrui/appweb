@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title %}{% endblock %}
+{% block title %}用户列表{% endblock %}
 
 {% block head %}{% endblock %}
 
@@ -65,7 +65,9 @@
 <div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
   <div class="modal-dialog ">
     <div class="modal-content">
+        <form  action="/user/user_list" method="post">
      <div class="user_button">
+
       <h1>注册用户</h1>
          <hr>
         <p></p>
@@ -73,35 +75,38 @@
 
          <div class="input-group input-group-lg">
   <span class="input-group-addon" id="sizing-addon1">用户</span>
-  <input type="text" class="form-control" placeholder="Username" aria-describedby="sizing-addon1">
+  <input type="text" class="form-control" placeholder="Username" aria-describedby="sizing-addon1" name="username1">
 </div>
 
          <div class="input-group input-group-lg">
   <span class="input-group-addon" id="sizing-addon1">手机号码</span>
-  <input type="text" class="form-control" placeholder="Phone Number" aria-describedby="sizing-addon1">
+  <input type="text" class="form-control" placeholder="Phone Number" aria-describedby="sizing-addon1" name="telephone">
 </div>
 
          <div class="input-group input-group-lg">
   <span class="input-group-addon" id="sizing-addon1">邮箱地址</span>
-  <input type="text" class="form-control" placeholder="Mail" aria-describedby="sizing-addon1">
+  <input type="text" class="form-control" placeholder="Mail" aria-describedby="sizing-addon1" name="mail">
 </div>
 
          <div class="input-group input-group-lg">
   <span class="input-group-addon" id="sizing-addon1">密码</span>
-  <input type="password" class="form-control" placeholder="password" aria-describedby="sizing-addon1">
+  <input type="password" class="form-control" placeholder="password" aria-describedby="sizing-addon1" name="password1">
 </div>
 
          <div class="input-group input-group-lg">
   <span class="input-group-addon" id="sizing-addon1">确认密码</span>
-  <input type="password" class="form-control" placeholder="password" aria-describedby="sizing-addon1">
+  <input type="password" class="form-control" placeholder="password" aria-describedby="sizing-addon1" name="password2">
 </div>
 
       </div>
 
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Send message</button>
+          <button type="submit" class="btn btn-primary">Send message</button>
         </div>
+
+             </form>
+
 
     </div>
   </div>
@@ -126,283 +131,21 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr class="table-hover">
-						<td>1</td>
-						<td>admin</td>
-						<td>administrator</td>
-                        <td>12345678901</td>
-                        <td>xujingrui@qq.com</td>
-                        <td>2017-01-16 13:45</td>
-                        <td>2017-01-16 19:11</td>
-                        <td>OnLine</td>
-					</tr>
-
-					<tr class="table-hover">
-						<td>1</td>
-						<td>admin</td>
-						<td>administrator</td>
-                        <td>12345678901</td>
-                        <td>xujingrui@qq.com</td>
-                        <td>2017-01-16 13:45</td>
-                        <td>2017-01-16 19:11</td>
-                        <td>OnLine</td>
-					</tr>
-					<tr class="table-hover">
-						<td>1</td>
-						<td>admin</td>
-						<td>administrator</td>
-                        <td>12345678901</td>
-                        <td>xujingrui@qq.com</td>
-                        <td>2017-01-16 13:45</td>
-                        <td>2017-01-16 19:11</td>
-                        <td>OnLine</td>
-					</tr>
-
-					<tr class="table-hover">
-						<td>1</td>
-						<td>admin</td>
-						<td>administrator</td>
-                        <td>12345678901</td>
-                        <td>xujingrui@qq.com</td>
-                        <td>2017-01-16 13:45</td>
-                        <td>2017-01-16 19:11</td>
-                        <td>OnLine</td>
-					</tr>
-					<tr class="table-hover">
-						<td>1</td>
-						<td>admin</td>
-						<td>administrator</td>
-                        <td>12345678901</td>
-                        <td>xujingrui@qq.com</td>
-                        <td>2017-01-16 13:45</td>
-                        <td>2017-01-16 19:11</td>
-                        <td>OnLine</td>
-					</tr>
-
-					<tr class="table-hover">
-						<td>1</td>
-						<td>admin</td>
-						<td>administrator</td>
-                        <td>12345678901</td>
-                        <td>xujingrui@qq.com</td>
-                        <td>2017-01-16 13:45</td>
-                        <td>2017-01-16 19:11</td>
-                        <td>OnLine</td>
-					</tr>
-					<tr class="table-hover">
-						<td>1</td>
-						<td>admin</td>
-						<td>administrator</td>
-                        <td>12345678901</td>
-                        <td>xujingrui@qq.com</td>
-                        <td>2017-01-16 13:45</td>
-                        <td>2017-01-16 19:11</td>
-                        <td>OnLine</td>
-					</tr>
-
-					<tr class="table-hover">
-						<td>1</td>
-						<td>admin</td>
-						<td>administrator</td>
-                        <td>12345678901</td>
-                        <td>xujingrui@qq.com</td>
-                        <td>2017-01-16 13:45</td>
-                        <td>2017-01-16 19:11</td>
-                        <td>OnLine</td>
-					</tr>
-					<tr class="table-hover">
-						<td>1</td>
-						<td>admin</td>
-						<td>administrator</td>
-                        <td>12345678901</td>
-                        <td>xujingrui@qq.com</td>
-                        <td>2017-01-16 13:45</td>
-                        <td>2017-01-16 19:11</td>
-                        <td>OnLine</td>
-					</tr>
-
-					<tr class="table-hover">
-						<td>1</td>
-						<td>admin</td>
-						<td>administrator</td>
-                        <td>12345678901</td>
-                        <td>xujingrui@qq.com</td>
-                        <td>2017-01-16 13:45</td>
-                        <td>2017-01-16 19:11</td>
-                        <td>OnLine</td>
-					</tr>
-					<tr class="table-hover">
-						<td>1</td>
-						<td>admin</td>
-						<td>administrator</td>
-                        <td>12345678901</td>
-                        <td>xujingrui@qq.com</td>
-                        <td>2017-01-16 13:45</td>
-                        <td>2017-01-16 19:11</td>
-                        <td>OnLine</td>
-					</tr>
-
-					<tr class="table-hover">
-						<td>1</td>
-						<td>admin</td>
-						<td>administrator</td>
-                        <td>12345678901</td>
-                        <td>xujingrui@qq.com</td>
-                        <td>2017-01-16 13:45</td>
-                        <td>2017-01-16 19:11</td>
-                        <td>OnLine</td>
-					</tr>
-					<tr class="table-hover">
-						<td>1</td>
-						<td>admin</td>
-						<td>administrator</td>
-                        <td>12345678901</td>
-                        <td>xujingrui@qq.com</td>
-                        <td>2017-01-16 13:45</td>
-                        <td>2017-01-16 19:11</td>
-                        <td>OnLine</td>
-					</tr>
-
-					<tr class="table-hover">
-						<td>1</td>
-						<td>admin</td>
-						<td>administrator</td>
-                        <td>12345678901</td>
-                        <td>xujingrui@qq.com</td>
-                        <td>2017-01-16 13:45</td>
-                        <td>2017-01-16 19:11</td>
-                        <td>OnLine</td>
-					</tr>
-					<tr class="table-hover">
-						<td>1</td>
-						<td>admin</td>
-						<td>administrator</td>
-                        <td>12345678901</td>
-                        <td>xujingrui@qq.com</td>
-                        <td>2017-01-16 13:45</td>
-                        <td>2017-01-16 19:11</td>
-                        <td>OnLine</td>
-					</tr>
-
-					<tr class="table-hover">
-						<td>1</td>
-						<td>admin</td>
-						<td>administrator</td>
-                        <td>12345678901</td>
-                        <td>xujingrui@qq.com</td>
-                        <td>2017-01-16 13:45</td>
-                        <td>2017-01-16 19:11</td>
-                        <td>OnLine</td>
-					</tr>
-					<tr class="table-hover">
-						<td>1</td>
-						<td>admin</td>
-						<td>administrator</td>
-                        <td>12345678901</td>
-                        <td>xujingrui@qq.com</td>
-                        <td>2017-01-16 13:45</td>
-                        <td>2017-01-16 19:11</td>
-                        <td>OnLine</td>
-					</tr>
-
-					<tr class="table-hover">
-						<td>1</td>
-						<td>admin</td>
-						<td>administrator</td>
-                        <td>12345678901</td>
-                        <td>xujingrui@qq.com</td>
-                        <td>2017-01-16 13:45</td>
-                        <td>2017-01-16 19:11</td>
-                        <td>OnLine</td>
-					</tr>
-					<tr class="table-hover">
-						<td>1</td>
-						<td>admin</td>
-						<td>administrator</td>
-                        <td>12345678901</td>
-                        <td>xujingrui@qq.com</td>
-                        <td>2017-01-16 13:45</td>
-                        <td>2017-01-16 19:11</td>
-                        <td>OnLine</td>
-					</tr>
-
-					<tr class="table-hover">
-						<td>1</td>
-						<td>admin</td>
-						<td>administrator</td>
-                        <td>12345678901</td>
-                        <td>xujingrui@qq.com</td>
-                        <td>2017-01-16 13:45</td>
-                        <td>2017-01-16 19:11</td>
-                        <td>OnLine</td>
-					</tr>
-					<tr class="table-hover">
-						<td>1</td>
-						<td>admin</td>
-						<td>administrator</td>
-                        <td>12345678901</td>
-                        <td>xujingrui@qq.com</td>
-                        <td>2017-01-16 13:45</td>
-                        <td>2017-01-16 19:11</td>
-                        <td>OnLine</td>
-					</tr>
-
-					<tr class="table-hover">
-						<td>1</td>
-						<td>admin</td>
-						<td>administrator</td>
-                        <td>12345678901</td>
-                        <td>xujingrui@qq.com</td>
-                        <td>2017-01-16 13:45</td>
-                        <td>2017-01-16 19:11</td>
-                        <td>OnLine</td>
-					</tr>
-					<tr class="table-hover">
-						<td>1</td>
-						<td>admin</td>
-						<td>administrator</td>
-                        <td>12345678901</td>
-                        <td>xujingrui@qq.com</td>
-                        <td>2017-01-16 13:45</td>
-                        <td>2017-01-16 19:11</td>
-                        <td>OnLine</td>
-					</tr>
-
-					<tr class="table-hover">
-						<td>1</td>
-						<td>admin</td>
-						<td>administrator</td>
-                        <td>12345678901</td>
-                        <td>xujingrui@qq.com</td>
-                        <td>2017-01-16 13:45</td>
-                        <td>2017-01-16 19:11</td>
-                        <td>OnLine</td>
-					</tr>
-					<tr class="table-hover">
-						<td>1</td>
-						<td>admin</td>
-						<td>administrator</td>
-                        <td>12345678901</td>
-                        <td>xujingrui@qq.com</td>
-                        <td>2017-01-16 13:45</td>
-                        <td>2017-01-16 19:11</td>
-                        <td>OnLine</td>
-					</tr>
-
-					<tr class="table-hover">
-						<td>1</td>
-						<td>admin</td>
-						<td>administrator</td>
-                        <td>12345678901</td>
-                        <td>xujingrui@qq.com</td>
-                        <td>2017-01-16 13:45</td>
-                        <td>2017-01-16 19:11</td>
-                        <td>OnLine</td>
-					</tr>
 
 
+                    {% for item in items %}
 
-
+					<tr class="table-hover">
+						<td>{{ loop.index }}</td>
+						<td>{{ item.username }}</td>
+						<td>administrator</td>
+                        <td>{{ item.telephone }}</td>
+                        <td>{{ item.mail }}@qq.com</td>
+                        <td>{{ item.ctime }}</td>
+                        <td>{{ item.etime }}</td>
+                        <td>{{ item.status }}</td>
+					</tr>
+                    {% endfor %}
 
 
 
