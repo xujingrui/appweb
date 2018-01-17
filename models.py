@@ -7,20 +7,20 @@ import shortuuid,datetime
 class UserModel(db.Model):
     __tablename__ = "users"
     id = db.Column(db.String(100),primary_key=True,default=shortuuid.uuid)
-    username = db.Column(db.String(100),nullable=False)
-    telephone = db.Column(db.String(11),nullable=False)
-    password = db.Column(db.String(100),nullable=False)
+    username = db.Column(db.String(30),nullable=False)
+    telephone = db.Column(db.String(15),nullable=False)
+    password = db.Column(db.String(30),nullable=False)
     mail = db.Column(db.string(30),nullable=False)
     ctime = db.Column(db.DateTime,default=datetime.datetime.now)
     etime = db.Column(db.string(20),nullable=True)
-    status = db.Column(db.string(10),nullable=False,default='OnLine')
+    status = db.Column(db.string(10),nullable=False,default='激活')
 
 
 #id,用户，登录地址，登录时间
 class UserLoginLogModel(db.Model):
     __tablename__ = 'userloginlog'
     id = db.Column(db.String(100),primary_key=True)
-    username = db.Column(db.String(100),nullable=False)
+    username = db.Column(db.String(30),nullable=False)
     ipaddr = db.Column(db.String(50),nullable=False)
     ctime = db.Column(db.DateTime,default=datetime.datetime.now)
 
@@ -29,14 +29,14 @@ class UserLoginLogModel(db.Model):
 class CmdbModel(db.Model):
     __tablename__ = 'cmdb'
     id = db.Column(db.String(100), primary_key=True)
-    name = db.Column(db.String(100),nullable=False)
+    name = db.Column(db.String(30),nullable=False)
     ctime = db.Column(db.string(20),nullable=True)
-    system = db.Column(db.string(50),nullable=False)
+    system = db.Column(db.string(20),nullable=False)
     ipaddr = db.Column(db.String(50),nullable=False)
-    core_number = db.Column(db.String(50),nullable=False)
-    memory = db.Column(db.String(50),nullable=False)
+    core_number = db.Column(db.String(3),nullable=False)
+    memory = db.Column(db.String(3),nullable=False)
     disk = db.Column(db.String(50),nullable=False)
-    status = db.Column(db.string(10),nullable=False,default='OnLine')
+    status = db.Column(db.string(10),nullable=False,default='在用')
 
 
 
