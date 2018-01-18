@@ -44,7 +44,7 @@ def user(id):
                 return '注册成功'
         else:
             items = UserModel.query.all()[:]
-            return render_template('user_list.html')
+            return render_template('user_list.html',items=items)
 
 
     if id == 'user_login_log':
@@ -60,4 +60,4 @@ def CMDB():
     return render_template('cmdb.html')
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0',port=80)
+    app.run(host='127.0.0.1',port=80)
