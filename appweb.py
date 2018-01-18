@@ -1,5 +1,5 @@
 #encoding: utf-8
-from flask import Flask,render_template,url_for,redirect
+from flask import Flask,render_template,url_for,redirect,session
 import config
 from flask import request
 from models import UserModel
@@ -19,10 +19,17 @@ def login():
     if request.method == 'POST':
         if request.form.get('username') == 'admin':
             return render_template('home.html')
+        username = request.form.get('username')
+        password = request.form.get('password')
+        user = UserModel.query.filter(UserModel.username == username,UserModel.password == password)
+        if user:
+            session['user_id'] = user.id
+            #30天免密码登录
+            #session.permanent = True
+            return render_template('home.html')
         else:
-            return '登录失败'
-    else:
-        return render_template('login.html')
+            return u'用户和密码错误，请重新输入！'
+
 
 
 
@@ -44,6 +51,8 @@ def user(id):
                 return '注册成功'
         else:
             items = UserModel.query.all()[:]
+            for i in items:
+                print i.mail
             return render_template('user_list.html',items=items)
 
 
