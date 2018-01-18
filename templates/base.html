@@ -28,7 +28,12 @@
                         <img class="img-responsive img-rounded" src="{{ url_for('static',filename='assets/img/dev.png') }}" alt="">
                     </div>
                     <div class="user-info">
-                        <span class="user-name">JingRui <strong>Xu</strong></span>
+                        <span class="user-name">
+                            {% if user %}
+                            <strong>{{ user.username }}</strong></span>
+                             {% else %}
+                             <strong>请登录</strong></span>
+                            {% endif %}
                         <span class="user-role">Administrator</span>
                         <div class="user-status">                       
                             <a href="#"><span class="label label-success">Online</span></a>                           
@@ -103,7 +108,7 @@
                     <a href="#"><i class="fa fa-bell"></i><span class="label label-warning notification">3</span></a>
                     <a href="#"><i class="fa fa-envelope"></i><span class="label label-success notification">7</span></a>
                     <a href="#"><i class="fa fa-gear"></i></a>
-                    <a href="#"><i class="fa fa-power-off"></i></a>
+                    <a href="{{ url_for('logout') }}"><i class="fa fa-power-off"></i></a>
                 </div>
             </nav><!-- sidebar-wrapper  -->
             <main class="page-content">

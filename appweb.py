@@ -21,7 +21,7 @@ def login():
             return render_template('home.html')
         username = request.form.get('username')
         password = request.form.get('password')
-        user = UserModel.query.filter(UserModel.username == username,UserModel.password == password)
+        user = UserModel.query.filter(UserModel.username == username,UserModel.password == password).first()
         if user:
             session['user_id'] = user.id
             #30天免密码登录
@@ -29,8 +29,15 @@ def login():
             return render_template('home.html')
         else:
             return u'用户和密码错误，请重新输入！'
+    else:
+        return render_template('login.html')
 
 
+@app.route('/logout/')
+def logout():
+    #session.pop('user_id')
+    session.clear()
+    return redirect(url_for('login'))
 
 
 @app.route('/user/<id>',methods=['GET','POST'])
@@ -68,5 +75,16 @@ def user(id):
 def CMDB():
     return render_template('cmdb.html')
 
+
+@app.context_processor
+def context_processor():
+    user_id = session.get('user_id')
+    user = UserModel.query.filter(UserModel.id == user_id).first()
+    if user_id:
+        return {'user':user}
+    return {}
+
+
 if __name__ == '__main__':
     app.run(host='127.0.0.1',port=80)
+    print 'abc'
