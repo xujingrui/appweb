@@ -58,8 +58,6 @@ def user(id):
                 return '注册成功'
         else:
             items = UserModel.query.all()[:]
-            for i in items:
-                print i.mail
             return render_template('user_list.html',items=items)
 
 
@@ -78,6 +76,7 @@ def CMDB():
 
 @app.context_processor
 def context_processor():
+
     user_id = session.get('user_id')
     user = UserModel.query.filter(UserModel.id == user_id).first()
     if user_id:
@@ -87,4 +86,4 @@ def context_processor():
 
 if __name__ == '__main__':
     app.run(host='127.0.0.1',port=80)
-    print 'abc'
+
