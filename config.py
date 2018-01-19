@@ -4,6 +4,10 @@ import os
 
 DEBUG = True
 
+ADMIN = 'admin'
+
+ADMINPASSWORD = '666666'
+
 SECRET_KEY = os.urandom(64)
 
 HOSTNAME = '172.16.0.10'

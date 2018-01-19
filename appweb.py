@@ -17,7 +17,10 @@ def home():
 @app.route('/login/',methods=['GET','POST'])
 def login():
     if request.method == 'POST':
-        if request.form.get('username') == 'admin':
+        admin = app.config.get('ADMIN')
+        adminpassword = app.config.get('ADMINPASSWORD')
+        if request.form.get('username') == admin and request.form.get('password') == adminpassword:
+            session['user_id'] = admin
             return render_template('home.html')
         username = request.form.get('username')
         password = request.form.get('password')
@@ -76,7 +79,6 @@ def CMDB():
 
 @app.context_processor
 def context_processor():
-
     user_id = session.get('user_id')
     user = UserModel.query.filter(UserModel.id == user_id).first()
     if user_id:
