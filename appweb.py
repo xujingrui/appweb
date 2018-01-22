@@ -2,7 +2,7 @@
 from flask import Flask,render_template,url_for,redirect,session
 import config
 from flask import request
-from models import UserModel
+from models import UserModel,DockerList
 from exts import db
 
 app = Flask(__name__)
@@ -74,9 +74,19 @@ def user(id):
 def docker(id):
     if id == 'host_list':
         if request.method == 'POST':
-            pass
+            hostname = request.form.get('hostname')
+            ipaddr = request.form.get('ipaddr')
+            port = request.form.get('port')
+            if hostname and ipaddr and port:
+                hostlist = DockerList(hostname=hostname,hostipaddr=ipaddr,hostport=port)
+                db.session.add(hostlist)
+                db.session.commit()
+                return '注册成功'
+            else:
+                return u'请输入内容'
         else:
-            return render_template('hostlist.html')
+            items = DockerList.query.all()[:]
+            return render_template('hostlist.html',items=items)
 
 
 

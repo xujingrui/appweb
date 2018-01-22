@@ -7,14 +7,46 @@
 {% block main %}
 <header class="header"><h1>主机列表</h1>
     <hr>
-<p>添加记录</p>
-<p>名称：</p>
-<p>IP：</p>
-<p>端口：</p>
-
+    <form action="/docker/host_list" method="post">
+<p>添加/删除记录</p>
+<p>名称：<input type="test" name="hostname"></p>
+<p>IP&emsp;： <input type="test" name="ipaddr"></p>
+<p>端口：<input type="test" name="port"></p>
+        <p><button type="submit">添加记录</button><button type="submit">删除记录</button></p>
+</form>
 </header>
+    <div class="container">
+ 	<div class="row clearfix">
+		<div class="col-md-12 column">
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>编号</th>
+						<th>名称</th>
+						<th>IP</th>
+                        <th>端口</th>
+                        <th>状态</th>
+					</tr>
+				</thead>
+				<tbody>
 
 
+                    {% for item in items %}
+
+					<tr class="table-hover">
+						<td>{{ loop.index }}</td>
+						<td>{{ item.hostname }}</td>
+						<td>{{ item.hostipaddr }}</td>
+                        <td>{{ item.hostport }}</td>
+                         <th><span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span></th>
+					</tr>
+                    {% endfor %}
+
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
 
 {% endblock %}
 
