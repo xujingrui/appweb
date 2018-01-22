@@ -12,7 +12,7 @@ db.init_app(app)
 
 @app.route('/')
 def home():
-    return redirect(url_for('login'))
+    return render_template('home.html')
 
 @app.route('/login/',methods=['GET','POST'])
 def login():
@@ -70,16 +70,42 @@ def user(id):
         return '无效'
 
 
+@app.route('/docker/<id>',methods=['GET','POST'])
+def docker(id):
+    if id == 'host_list':
+        if request.method == 'POST':
+            pass
+        else:
+            return render_template('hostlist.html')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 @app.route('/CMDB/')
 def CMDB():
     return render_template('cmdb.html')
 
-
 @app.context_processor
 def context_processor():
     user_id = session.get('user_id')
+    if user_id:
+        print user_id
     user = UserModel.query.filter(UserModel.id == user_id).first()
     if user_id:
         return {'user':user}

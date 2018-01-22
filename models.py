@@ -19,7 +19,7 @@ class UserModel(db.Model):
 #id,用户，登录地址，登录时间
 class UserLoginLogModel(db.Model):
     __tablename__ = 'userloginlog'
-    id = db.Column(db.String(100),primary_key=True)
+    id = db.Column(db.String(100),primary_key=True,default=shortuuid.uuid)
     username = db.Column(db.String(30),nullable=False)
     ipaddr = db.Column(db.String(50),nullable=False)
     ctime = db.Column(db.DateTime,default=datetime.datetime.now)
@@ -28,7 +28,7 @@ class UserLoginLogModel(db.Model):
 #id,名称，购买时间，操作系统，IP地址，CPU核心数，内存，硬盘，使用状态
 class CmdbModel(db.Model):
     __tablename__ = 'cmdb'
-    id = db.Column(db.String(100), primary_key=True)
+    id = db.Column(db.String(100), primary_key=True,default=shortuuid.uuid)
     name = db.Column(db.String(30),nullable=False)
     ctime = db.Column(db.String(20),nullable=True)
     system = db.Column(db.String(20),nullable=False)
@@ -37,6 +37,16 @@ class CmdbModel(db.Model):
     memory = db.Column(db.String(3),nullable=False)
     disk = db.Column(db.String(50),nullable=False)
     status = db.Column(db.String(10),default='在用')
+
+
+class DockerList(db.Model):
+    __tablename__ = 'hostlist'
+    id = db.Column(db.String(100), primary_key=True,default=shortuuid.uuid)
+    hostname = db.Column(db.String(30),nullable=False)
+    hostipaddr = db.Column(db.String(50),nullable=False)
+    hostport = db.Column(db.String(5),nullable=False)
+
+
 
 
 
