@@ -114,11 +114,9 @@ def CMDB():
 @app.context_processor
 def context_processor():
     user_id = session.get('user_id')
-    if user_id:
-        print user_id
     user = UserModel.query.filter(UserModel.id == user_id).first()
     if user_id:
-        return {'user':user}
+         return {'user':user}
     return {}
 
 
