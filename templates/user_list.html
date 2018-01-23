@@ -5,7 +5,17 @@
 {% block head %}{% endblock %}
 
 {% block main %}
-    <header class="header"><h1>用户列表</h1></header>
+    <header class="header">
+        {% if success %}
+        <div class="alert alert-success alert-dismissible" role="alert">{{ success }}</div>
+        {% endif %}
+
+        {% if error %}
+        <div class="alert alert-danger alert-dismissible" role="alert">{{ error }}</div>
+        {% endif %}
+
+        <h1>用户列表</h1>
+    </header>
 
 
  <div class="container">

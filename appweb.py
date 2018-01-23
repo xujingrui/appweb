@@ -20,7 +20,6 @@ def login():
         admin = app.config.get('ADMIN')
         adminpassword = app.config.get('ADMINPASSWORD')
         ipaddr = request.remote_addr
-        print ipaddr
         if request.form.get('username') == admin and request.form.get('password') == adminpassword:
             session['user_id'] = admin
             log = UserLoginLogModel(username=admin,ipaddr=ipaddr)
@@ -59,12 +58,16 @@ def user(id):
             password1 = request.form.get('password1')
             password2 = request.form.get('password2')
             if password1 != password2 :
-                return u'两次密码输入错误，请重新填写！'
+                error = '两次密码输入错误，请重新填写！'
+                items = UserModel.query.all()[:]
+                return render_template('user_list.html',items=items,error=error)
             else:
                 user = UserModel(username=username,telephone=telephone,mail=mail,password=password1,status='激活')
                 db.session.add(user)
                 db.session.commit()
-                return '注册成功'
+                success = '注册成功'
+                items = UserModel.query.all()[:]
+                return  render_template('user_list.html',items=items,success=success)
         else:
             items = UserModel.query.all()[:]
             return render_template('user_list.html',items=items)
@@ -85,11 +88,17 @@ def docker(id):
                     hostlist = DockerList(hostname=hostname,hostipaddr=ipaddr,hostport=port)
                     db.session.add(hostlist)
                     db.session.commit()
-                    return '注册成功'
+                    success = u'注册成功'
+                    items = DockerList.query.all()[:]
+                    return render_template('hostlist.html',items=items,success=success)
                 else:
-                    return u'请输入正确的IP地址'
+                    error = u'请输入正确的IP地址'
+                    items = DockerList.query.all()[:]
+                    return render_template('hostlist.html',items=items,error=error)
             else:
-                return u'请输入内容'
+                error = u'请输入内容'
+                items = DockerList.query.all()[:]
+                return render_template('hostlist.html',items=items,error=error)
         else:
             items = DockerList.query.all()[:]
             return render_template('hostlist.html',items=items)
