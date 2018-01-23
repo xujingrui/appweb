@@ -75,7 +75,7 @@ def user(id):
             items = UserModel.query.all()[:]
             return render_template('user_list.html',items=items)
     if id == 'user_login_log':
-        items = UserLoginLogModel.query.all()[:]
+        items = UserLoginLogModel.query.order_by(UserLoginLogModel.ctime.desc()).all()[:]
         return render_template('user_login_log.html',items=items)
 
 @app.route('/docker/<id>',methods=['GET','POST'])
