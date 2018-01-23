@@ -12,5 +12,5 @@ python manage.py db migrate
 
 数据库更新：
 ```bash
-python manage.py db migrate
+python manage.py db upgrade
 ```
