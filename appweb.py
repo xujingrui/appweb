@@ -2,7 +2,7 @@
 from flask import Flask,render_template,url_for,redirect,session
 import config
 from flask import request
-from models import UserModel,DockerList
+from models import UserModel,DockerList,UserLoginLogModel
 from exts import db
 
 app = Flask(__name__)
@@ -19,8 +19,13 @@ def login():
     if request.method == 'POST':
         admin = app.config.get('ADMIN')
         adminpassword = app.config.get('ADMINPASSWORD')
+        ipaddr = request.remote_addr
+        print ipaddr
         if request.form.get('username') == admin and request.form.get('password') == adminpassword:
             session['user_id'] = admin
+            log = UserLoginLogModel(username=admin,ipaddr=ipaddr)
+            db.session.add(log)
+            db.session.commit()
             return render_template('home.html')
         username = request.form.get('username')
         password = request.form.get('password')
@@ -29,6 +34,9 @@ def login():
             session['user_id'] = user.id
             #30天免密码登录
             #session.permanent = True
+            log = UserLoginLogModel(username=username,ipaddr=ipaddr)
+            db.session.add(log)
+            db.session.commit()
             return render_template('home.html')
         else:
             return u'用户和密码错误，请重新输入！'
@@ -62,12 +70,10 @@ def user(id):
         else:
             items = UserModel.query.all()[:]
             return render_template('user_list.html',items=items)
-
-
     if id == 'user_login_log':
-        return render_template('user_login_log.html')
-    else:
-        return '无效'
+        items = UserLoginLogModel.query.all()[:]
+        return render_template('user_login_log.html',items=items)
+
 
 
 @app.route('/docker/<id>',methods=['GET','POST'])
@@ -87,20 +93,6 @@ def docker(id):
         else:
             items = DockerList.query.all()[:]
             return render_template('hostlist.html',items=items)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
