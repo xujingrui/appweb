@@ -23,6 +23,7 @@ class UserLoginLogModel(db.Model):
     username = db.Column(db.String(30),nullable=False)
     ipaddr = db.Column(db.String(50),nullable=False)
     ctime = db.Column(db.DateTime,default=datetime.datetime.now)
+    status =  db.Column(db.String(10),nullable=False)
 
 
 #id,名称，购买时间，操作系统，IP地址，CPU核心数，内存，硬盘，使用状态

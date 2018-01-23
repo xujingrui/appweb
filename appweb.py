@@ -22,7 +22,7 @@ def login():
         ipaddr = request.remote_addr
         if request.form.get('username') == admin and request.form.get('password') == adminpassword:
             session['user_id'] = admin
-            log = UserLoginLogModel(username=admin,ipaddr=ipaddr)
+            log = UserLoginLogModel(username=admin,ipaddr=ipaddr,status='登录成功')
             db.session.add(log)
             db.session.commit()
             return render_template('home.html')
@@ -33,11 +33,14 @@ def login():
             session['user_id'] = user.id
             #30天免密码登录
             #session.permanent = True
-            log = UserLoginLogModel(username=username,ipaddr=ipaddr)
+            log = UserLoginLogModel(username=username,ipaddr=ipaddr,status='登录成功')
             db.session.add(log)
             db.session.commit()
             return render_template('home.html')
         else:
+            log = UserLoginLogModel(username=username, ipaddr=ipaddr, status='登录失败')
+            db.session.add(log)
+            db.session.commit()
             return u'用户和密码错误，请重新输入！'
     else:
         return render_template('login.html')
