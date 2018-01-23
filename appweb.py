@@ -4,11 +4,11 @@ import config
 from flask import request
 from models import UserModel,DockerList,UserLoginLogModel
 from exts import db
+import re
 
 app = Flask(__name__)
 app.config.from_object(config)
 db.init_app(app)
-
 
 @app.route('/')
 def home():
@@ -43,13 +43,11 @@ def login():
     else:
         return render_template('login.html')
 
-
 @app.route('/logout/')
 def logout():
     #session.pop('user_id')
     session.clear()
     return redirect(url_for('login'))
-
 
 @app.route('/user/<id>',methods=['GET','POST'])
 def user(id):
@@ -74,8 +72,6 @@ def user(id):
         items = UserLoginLogModel.query.all()[:]
         return render_template('user_login_log.html',items=items)
 
-
-
 @app.route('/docker/<id>',methods=['GET','POST'])
 def docker(id):
     if id == 'host_list':
@@ -84,20 +80,19 @@ def docker(id):
             ipaddr = request.form.get('ipaddr')
             port = request.form.get('port')
             if hostname and ipaddr and port:
-                hostlist = DockerList(hostname=hostname,hostipaddr=ipaddr,hostport=port)
-                db.session.add(hostlist)
-                db.session.commit()
-                return '注册成功'
+                p = re.compile('^((25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(25[0-5]|2[0-4]\d|[01]?\d\d?)$')
+                if p.match(ipaddr):
+                    hostlist = DockerList(hostname=hostname,hostipaddr=ipaddr,hostport=port)
+                    db.session.add(hostlist)
+                    db.session.commit()
+                    return '注册成功'
+                else:
+                    return u'请输入正确的IP地址'
             else:
                 return u'请输入内容'
         else:
             items = DockerList.query.all()[:]
             return render_template('hostlist.html',items=items)
-
-
-
-
-
 
 @app.route('/CMDB/')
 def CMDB():
@@ -110,7 +105,6 @@ def context_processor():
     if user_id:
          return {'user':user}
     return {}
-
 
 if __name__ == '__main__':
     app.run(host='127.0.0.1',port=80)
