@@ -4,7 +4,7 @@ import config
 from flask import request
 from models import UserModel,DockerList,UserLoginLogModel
 from exts import db
-import re
+import re,requests
 
 app = Flask(__name__)
 app.config.from_object(config)
@@ -88,12 +88,21 @@ def docker(id):
             if hostname and ipaddr and port:
                 p = re.compile('^((25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(25[0-5]|2[0-4]\d|[01]?\d\d?)$')
                 if p.match(ipaddr):
-                    hostlist = DockerList(hostname=hostname,hostipaddr=ipaddr,hostport=port)
-                    db.session.add(hostlist)
-                    db.session.commit()
-                    success = u'注册成功'
-                    items = DockerList.query.all()[:]
-                    return render_template('hostlist.html',items=items,success=success)
+                    print type(ipaddr),type(port)
+                    url = 'http://%s:%s/containers/json' % (ipaddr,port)
+                    try:
+                        r = requests.get(url)
+                        if r.status_code == 200:
+                            hostlist = DockerList(hostname=hostname,hostipaddr=ipaddr,hostport=port)
+                            db.session.add(hostlist)
+                            db.session.commit()
+                            success = u'注册成功'
+                            items = DockerList.query.all()[:]
+                            return render_template('hostlist.html',items=items,success=success)
+                    except:
+                        error = u'请输入正确的Docker地址'
+                        items = DockerList.query.all()[:]
+                        return render_template('hostlist.html', items=items, error=error)
                 else:
                     error = u'请输入正确的IP地址'
                     items = DockerList.query.all()[:]
