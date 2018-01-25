@@ -88,7 +88,6 @@ def docker(id):
             if hostname and ipaddr and port:
                 p = re.compile('^((25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(25[0-5]|2[0-4]\d|[01]?\d\d?)$')
                 if p.match(ipaddr):
-                    print type(ipaddr),type(port)
                     url = 'http://%s:%s/containers/json' % (ipaddr,port)
                     try:
                         r = requests.get(url)
