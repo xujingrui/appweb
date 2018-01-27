@@ -61,14 +61,14 @@ def user(id):
             password1 = request.form.get('password1')
             password2 = request.form.get('password2')
             if password1 != password2 :
-                error = '两次密码输入错误，请重新填写！'
+                error = u'两次密码输入错误，请重新填写！'
                 items = UserModel.query.all()[:]
                 return render_template('user_list.html',items=items,error=error)
             else:
                 user = UserModel(username=username,telephone=telephone,mail=mail,password=password1,status='激活')
                 db.session.add(user)
                 db.session.commit()
-                success = '注册成功'
+                success = u'注册成功'
                 items = UserModel.query.all()[:]
                 return  render_template('user_list.html',items=items,success=success)
         else:
