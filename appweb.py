@@ -5,6 +5,7 @@ from flask import request
 from models import UserModel,DockerList,UserLoginLogModel
 from exts import db
 import re,requests
+from docker import DockerStatus
 
 app = Flask(__name__)
 app.config.from_object(config)
@@ -114,6 +115,8 @@ def docker(id):
             items = DockerList.query.all()[:]
             return render_template('hostlist.html',items=items)
     if id == 'container_list':
+        items = DockerList.query.all()[:]
+        print DockerStatus(items)
         return render_template('container_list.html')
 
 @app.route('/CMDB/')

@@ -12,7 +12,7 @@
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/demo.css') }}">
 	<link rel="stylesheet" href="{{ url_for('static',filename='assets/css/jquery.mCustomScrollbar.min.css') }}" />
     <link rel="stylesheet" href="{{ url_for('static',filename='assets/css/custom.css') }}">
-	
+	{% block head %}{% endblock %}
 </head>
 <body>
 
