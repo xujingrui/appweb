@@ -117,7 +117,6 @@ def docker(id):
     if id == 'container_list':
         items = DockerList.query.all()[:]
         data =  DockerStatus(items)
-        print data
         return render_template('container_list.html',data=data)
 
 @app.route('/CMDB/')

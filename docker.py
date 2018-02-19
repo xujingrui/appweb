@@ -1,27 +1,22 @@
 #encoding: utf-8
 import requests
-import json
-import time
+
 
 
 def DockerStatus(items):
-    print time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()),'开始'
     alldata =[]
     for line in items:
         url = 'http://%s:%s/containers/json' % (line.hostipaddr, line.hostport)
         r = requests.get(url)
         data = r.json()
         datalist = []
-        print time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()), 'i结束'
         for i in data:
             datalist.append(i['Names'][0].strip('/'))
         containers = []
-        print time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()), 'i开始'
         for j in datalist:
             url = 'http://%s:%s/containers/%s/stats?stream=false' % (line.hostipaddr, line.hostport,j)
             r = requests.get(url)
             data = r.json()
-            print time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()), 'jreq结束'
             cpu_total_usage = data['cpu_stats']['cpu_usage']['total_usage']
             pre_cpu_total_usage = data['precpu_stats']['cpu_usage']['total_usage']
             cpu_delta = cpu_total_usage - pre_cpu_total_usage
@@ -48,7 +43,6 @@ def DockerStatus(items):
                 "container_neti": neti,
                 "container_neto": neto,
                 "container_PID": PID})
-            print time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()), 'j结束'
         alldata.append({"hostname": line.hostname, "hostipaddr": line.hostipaddr, "hostport": line.hostport, "containers": containers})
         #print(json.dumps(alldata, indent=1))
     return alldata
