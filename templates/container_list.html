@@ -17,19 +17,20 @@
 </header>
 
 
-
+{% for line in data %}
   <div class="panel panel-default" style="box-shadow:0px 0px 5px #000;width: 1170px;margin: 0 auto;border-radius:25px">
     <div class="panel-heading" style="border-radius:25px 25px 0 0">
-     <h3 class="panel-title">Host IP</h3>
+     <h3 class="panel-title">HostName: {{ line.hostname }}  Ipaddr: {{ line.hostipaddr }}  Port:{{ line.hostport }}</h3>
     </div>
+{% for i in line.containers %}
     <div class="panel-body">
         <div style="width: 300px;float:left;">
-      <div style="float:left">ContainerName:</div>
+      <div style="float:left">ContainerName:{{ i.container_name }}</div>
         </div>
         <div style="width: 120px;float:left;">
       <div style="float:left">Cpu:</div>
       <div class="progress divll" style="width: 100px;float:left">
-        <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 45%">
+        <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: {{ i.container_CPU }}%">
           <span class="sr-only">45% Complete</span>
         </div>
        </div>
@@ -37,26 +38,28 @@
         <div style="width: 120px;float:left;">
       <div style="float:left">Memory:</div>
       <div class="progress divll" style="width: 100px;float:left">
-        <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 45%">
+        <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: {{ i.container_MEN }}%">
           <span class="sr-only">45% Complete</span>
         </div>
        </div>
             </div>
             <div style="width: 200px;float:left;">
-                <span>Usage:123123 Mb limit:123123123 Mb</span>
+                <span>Memory Usage:{{ i.container_menusage }} Mb Memory Limit:{{ i.container_menlimit }} Mb</span>
                 </div>
                 <div style="width: 200px;float:left;">
-                <span>NetI:123123 Kb NetO:123123 Kb</span>
+                <span>Network NetI:{{ i.container_neti }} Kb Network NetO:{{ i.container_neto }} Kb</span>
                 </div>
                 <div style="width: 100px;float:left;">
-                <span>Pid:11</span>
+                <span>Pid:{{ i.container_PID }}</span>
                 </div>
 
 
         </div>
+    {% endfor %}
+
 
 </div>
     <hr>
-
+{% endfor %}
 
 {% endblock %}
