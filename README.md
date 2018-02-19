@@ -1,6 +1,12 @@
 "# DEVOPS" 
 
 
+##安装包
+```bash
+pip freeze > requitements.txt
+```
+
+
 ## 数据库
 
 激活python虚拟环境
