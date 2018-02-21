@@ -73,6 +73,9 @@ def user(id):
                 db.session.add(user)
                 db.session.commit()
                 operation_user = session.get('user_id')
+                if operation_user != 'admin':
+                    line = UserModel.query.filter(UserModel.id == operation_user).first()
+                    operation_user = line.username
                 Operation = UserOperationLogModel(username=operation_user,
                                                   operation=u'添加新用户%s' % username)
                 db.session.add(Operation)
@@ -109,6 +112,9 @@ def docker(id):
                             db.session.commit()
                             success = u'注册成功'
                             operation_user = session.get('user_id')
+                            if operation_user != 'admin':
+                                line = UserModel.query.filter(UserModel.id ==operation_user).first()
+                                operation_user = line.username
                             Operation = UserOperationLogModel(username=operation_user,operation=u'添加docker主机%s 端口%s' % (ipaddr,port))
                             db.session.add(Operation)
                             db.session.commit()
@@ -159,4 +165,3 @@ def context_processor():
 if __name__ == '__main__':
     app.run(host='127.0.0.1',port=80)
 
-1
