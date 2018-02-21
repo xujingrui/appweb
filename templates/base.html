@@ -81,8 +81,8 @@
                                 <ul>
                                     <li><a href="{{ url_for('docker',id='host_list') }}">主机列表</a></li>
                                     <li><a href="{{ url_for('docker',id='container_list') }}">主机容器</a></li>
-                                    <li><a href="#">容器监控</a></li>
-                                    <li><a href="#">镜像仓库</a></li>
+                                    <li><a href="#">容器监控(No)</a></li>
+                                    <li><a href="#">镜像仓库(No)</a></li>
                                 </ul>
                             </div>
                         </li>
@@ -91,9 +91,9 @@
                             <div class="sidebar-submenu">
                                 <ul>
                                     <li><a href="{{ url_for('cmdb',id='asset') }}">资产管理</a></li>
-                                    <li><a href="#">任务管理</a></li>
+                                    <li><a href="#">任务管理(No)</a></li>
                                     <li><a href="{{ url_for('cmdb',id='event') }}">故障事件</a></li>
-                                    <li><a href="#">运维审计</a></li>
+                                    <li><a href="#">运维审计(No)</a></li>
                                 </ul>
                             </div>
                         </li>
@@ -102,17 +102,17 @@
                             <div class="sidebar-submenu">
                                 <ul>
                                     <li><a href="{{ url_for('user',id='user_list') }}">用户列表</a></li>
-                                    <li><a href="#">权限管理</a></li>
-                                    <li><a href="#">操作记录</a></li>
+                                    <li><a href="#">权限管理(No)</a></li>
+                                    <li><a href="{{ url_for('user',id='operation') }}">操作日记</a></li>
                                     <li><a href="{{ url_for('user',id='user_login_log') }}">登录日志</a></li>
                                 </ul>
                             </div>
                         </li>
                         <li class="header-menu"><span>Virtualization menu</span></li>
-                        <li><a href="#"><i class="fa fa-tv"></i><span>CMDB</span></a></li>
-                        <li><a href="#"><i class="fa fa-photo"></i><span>安全管理</span></a></li>
-                        <li><a href="#"><i class="fa fa-bar-chart-o"></i><span>系统日志</span></a></li>
-                        <li><a href="#"><i class="fa fa-diamond"></i><span>系统监控</span></a></li>
+                        <li><a href="#"><i class="fa fa-tv"></i><span>TEST(No)</span></a></li>
+                        <li><a href="#"><i class="fa fa-photo"></i><span>安全管理(No)</span></a></li>
+                        <li><a href="#"><i class="fa fa-bar-chart-o"></i><span>系统日志(No)</span></a></li>
+                        <li><a href="#"><i class="fa fa-diamond"></i><span>系统监控(No)</span></a></li>
                     </ul>
                    </div><!-- sidebar-menu  -->            
                 </div><!-- sidebar-content  -->

@@ -2,18 +2,21 @@
 from flask import Flask,render_template,url_for,redirect,session
 import config
 from flask import request
-from models import UserModel,DockerList,UserLoginLogModel
+from models import UserModel,DockerList,UserLoginLogModel,UserOperationLogModel
 from exts import db
 import re,requests
 from docker import DockerStatus
+
 
 app = Flask(__name__)
 app.config.from_object(config)
 db.init_app(app)
 
+
+
 @app.route('/')
 def home():
-    return render_template('home.html')
+    return redirect(url_for('login'))
 
 @app.route('/login/',methods=['GET','POST'])
 def login():
@@ -69,6 +72,11 @@ def user(id):
                 user = UserModel(username=username,telephone=telephone,mail=mail,password=password1,status='激活')
                 db.session.add(user)
                 db.session.commit()
+                operation_user = session.get('user_id')
+                Operation = UserOperationLogModel(username=operation_user,
+                                                  operation=u'添加新用户%s' % username)
+                db.session.add(Operation)
+                db.session.commit()
                 success = u'注册成功'
                 items = UserModel.query.all()[:]
                 return  render_template('user_list.html',items=items,success=success)
@@ -78,6 +86,9 @@ def user(id):
     if id == 'user_login_log':
         items = UserLoginLogModel.query.order_by(UserLoginLogModel.ctime.desc()).all()[:]
         return render_template('user_login_log.html',items=items)
+    if id == 'operation':
+        items = UserOperationLogModel.query.order_by(UserOperationLogModel.ctime.desc()).all()[:]
+        return render_template('user_operation_log.html',items=items)
 
 @app.route('/docker/<id>',methods=['GET','POST'])
 def docker(id):
@@ -97,6 +108,10 @@ def docker(id):
                             db.session.add(hostlist)
                             db.session.commit()
                             success = u'注册成功'
+                            operation_user = session.get('user_id')
+                            Operation = UserOperationLogModel(username=operation_user,operation=u'添加docker主机%s 端口%s' % (ipaddr,port))
+                            db.session.add(Operation)
+                            db.session.commit()
                             items = DockerList.query.all()[:]
                             return render_template('hostlist.html',items=items,success=success)
                     except:
@@ -139,6 +154,7 @@ def context_processor():
     if user_id:
          return {'user':user}
     return {}
+
 
 if __name__ == '__main__':
     app.run(host='127.0.0.1',port=80)

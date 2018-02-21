@@ -26,9 +26,19 @@ class UserLoginLogModel(db.Model):
     status =  db.Column(db.String(10),nullable=False)
 
 
+
+#id,用户，操作时间，操作内容
+class UserOperationLogModel(db.Model):
+    __tablename__ = 'useroperationlog'
+    id = db.Column(db.String(100),primary_key=True,default=shortuuid.uuid)
+    username = db.Column(db.String(30),nullable=False)
+    ctime = db.Column(db.DateTime, default=datetime.datetime.now)
+    operation = db.Column(db.String(100),nullable=False)
+
+
 #id,名称，购买时间，操作系统，IP地址，CPU核心数，内存，硬盘，使用状态
-class CmdbModel(db.Model):
-    __tablename__ = 'cmdb'
+class CmdbAssetModel(db.Model):
+    __tablename__ = 'cmdbasset'
     id = db.Column(db.String(100), primary_key=True,default=shortuuid.uuid)
     name = db.Column(db.String(30),nullable=False)
     ctime = db.Column(db.String(20),nullable=True)
@@ -39,7 +49,7 @@ class CmdbModel(db.Model):
     disk = db.Column(db.String(50),nullable=False)
     status = db.Column(db.String(10),default='在用')
 
-
+#id,主机名称,主机地址,主机端口
 class DockerList(db.Model):
     __tablename__ = 'hostlist'
     id = db.Column(db.String(100), primary_key=True,default=shortuuid.uuid)

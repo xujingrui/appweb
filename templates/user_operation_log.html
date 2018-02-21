@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %} 登录日志-DEVOPS{% endblock %}
+
+{% block head %}{% endblock %}
+
+{% block main %}
+    <header class="header"><h1>操作日志</h1>
+        <hr></header>
+ <div class="container">
+	<div class="row clearfix">
+		<div class="col-md-12 column">
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>编号</th>
+						<th>用户</th>
+                        <th>操作时间</th>
+						<th>操作内容</th>
+					</tr>
+				</thead>
+				<tbody>
+                    {% for line in items %}
+					<tr class="table-hover">
+						<td>{{ loop.index }}</td>
+						<td>{{ line.username }}</td>
+						<td>{{ line.ctime }}</td>
+						<td>{{ line.operation }}</td>
+
+					</tr>
+                    {% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

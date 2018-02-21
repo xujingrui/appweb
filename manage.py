@@ -4,7 +4,7 @@ from flask_migrate import Migrate,MigrateCommand
 from appweb import app
 from flask_script import Manager
 from exts import db
-from models import UserModel,UserLoginLogModel,CmdbModel
+from models import UserModel,UserLoginLogModel,CmdbAssetModel,UserOperationLogModel
 
 
 
