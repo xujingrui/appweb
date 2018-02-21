@@ -90,9 +90,9 @@
                             <a href="#"><i class="fa fa-diamond"></i><span>CMDB</span></a>
                             <div class="sidebar-submenu">
                                 <ul>
-                                    <li><a href="#">资产管理</a></li>
+                                    <li><a href="{{ url_for('cmdb',id='asset') }}">资产管理</a></li>
                                     <li><a href="#">任务管理</a></li>
-                                    <li><a href="#">故障事件</a></li>
+                                    <li><a href="{{ url_for('cmdb',id='event') }}">故障事件</a></li>
                                     <li><a href="#">运维审计</a></li>
                                 </ul>
                             </div>
@@ -109,7 +109,7 @@
                             </div>
                         </li>
                         <li class="header-menu"><span>Virtualization menu</span></li>
-                        <li><a href="{{ url_for('CMDB') }}"><i class="fa fa-tv"></i><span>CMDB</span></a></li>
+                        <li><a href="#"><i class="fa fa-tv"></i><span>CMDB</span></a></li>
                         <li><a href="#"><i class="fa fa-photo"></i><span>安全管理</span></a></li>
                         <li><a href="#"><i class="fa fa-bar-chart-o"></i><span>系统日志</span></a></li>
                         <li><a href="#"><i class="fa fa-diamond"></i><span>系统监控</span></a></li>

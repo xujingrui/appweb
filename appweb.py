@@ -119,9 +119,18 @@ def docker(id):
         data =  DockerStatus(items)
         return render_template('container_list.html',data=data)
 
-@app.route('/CMDB/')
-def CMDB():
-    return render_template('cmdb.html')
+@app.route('/cmdb/<id>')
+def cmdb(id):
+    if id == 'asset':
+#        if request.method == 'POST':
+#            pass
+#        else:
+        return render_template('cmdb_asset.html')
+    if id == 'event':
+#        if request.method == 'POST':
+#            pass
+#        else:
+        return render_template('cmdb_event.html')
 
 @app.context_processor
 def context_processor():
