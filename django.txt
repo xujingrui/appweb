@@ -1,0 +1,1471 @@
+3、WEB框架
+
+	MVC
+		Model       View       Controller
+		数据库   模板文件    业务处理
+	
+	
+	MTV
+
+		Model    Template     View
+		数据库   模板文件    业务处理
+	
+	
+	############## WEB：MVC、MTV
+	
+4、Django
+	
+	pip3 install django
+	
+	
+	C:\Python35\Scripts
+	
+	# 创建Django工程
+	django-admin startproject 【工程名称】
+	
+		mysite
+			- mysite        # 对整个程序进行配置
+				- init
+				- settings  # 配置文件
+				- url       # URL对应关系
+				- wsgi      # 遵循WSIG规范，uwsgi + nginx
+			- manage.py     # 管理Django程序：
+								- python manage.py 
+								- python manage.py startapp xx
+								- python manage.py makemigrations
+								- python manage.py migrate
+		
+		
+		
+	# 运行Django功能
+	python manage.py runserver 127.0.0.1:8001
+	
+	
+	chouti
+		- chouti
+			- 配置
+		- 主站 app
+		- 后台管理 app
+	
+	
+	
+	# 创建app
+	python manage.py startapp cmdb
+	python manage.py startapp openstack
+	python manage.py startapp xxoo....
+	
+	
+	app：
+		migrations     数据修改表结构
+		admin          Django为我们提供的后台管理
+		apps           配置当前app
+		models         ORM,写指定的类  通过命令可以创建数据库结构
+		tests          单元测试
+		views          业务代码
+	
+	
+	
+	1、配置模板的路径
+	
+		TEMPLATES = [
+				{
+					'BACKEND': 'django.template.backends.django.DjangoTemplates',
+					'DIRS': [os.path.join(BASE_DIR, 'templates')],
+					'APP_DIRS': True,
+					'OPTIONS': {
+						'context_processors': [
+							'django.template.context_processors.debug',
+							'django.template.context_processors.request',
+							'django.contrib.auth.context_processors.auth',
+							'django.contrib.messages.context_processors.messages',
+						],
+					},
+				},
+			]
+	2、配置静态目录
+		static
+	
+		STATICFILES_DIRS = (
+			os.path.join(BASE_DIR, 'static'),
+		)
+
+		
+		<link rel="stylesheet" href="/static/commons.css" />
+	
+
+内容整理
+	1. 创建Django工程
+			django-admin startproject 工程名
+
+	2. 创建APP
+		cd 工程名
+		python manage.py startapp cmdb
+
+	3、静态文件
+		project.settings.py
+		
+		STATICFILES_DIRS = (
+			os.path.join(BASE_DIR, "static"),
+		)
+	
+	4、模板路径
+	
+		DIRS ==>    [os.path.join(BASE_DIR,'templates'),]
+		
+	5、settings中
+		
+		middlerware
+		
+			# 注释 csrf
+			
+			
+	6、定义路由规则
+		url.py
+		
+			"login" --> 函数名
+			
+	7、定义视图函数
+		app下views.py
+			
+			def func(request):
+				# request.method   GET / POST
+				
+				# http://127.0.0.1:8009/home?nid=123&name=alex
+				# request.GET.get('',None)   # 获取请求发来的而数据
+				
+				# request.POST.get('',None)
+				
+				
+				# return HttpResponse("字符串")
+				# return render(request, "HTML模板的路径")
+				# return redirect('/只能填URL')
+				
+	8、模板渲染
+		特殊的模板语言
+		
+			-- {{ 变量名 }}
+		
+				def func(request):
+					return render(request, "index.html", {'current_user': "alex"})
+		
+					
+				index.html
+				
+				<html>
+				..
+					<body>
+						<div>{{current_user}}</div>
+					</body>
+				
+				</html>
+				
+				====> 最后生成的字符串
+				
+				<html>
+				..
+					<body>
+						<div>alex</div>
+					</body>
+				
+				</html>
+			-- For循环
+				def func(request):
+					return render(request, "index.html", {'current_user': "alex", 'user_list': ['alex','eric']})
+		
+					
+				index.html
+				
+				<html>
+				..
+					<body>
+						<div>{{current_user}}</div>
+						
+						<ul>
+							{% for row in user_list %}
+							
+								{% if row == "alex" %}
+									<li>{{ row }}</li>
+								{% endif %}
+								
+							{% endfor %}
+						</ul>
+						
+					</body>
+				
+				</html>
+				
+			#####索引################# 
+				def func(request):
+					return render(request, "index.html", {
+								'current_user': "alex", 
+								'user_list': ['alex','eric'], 
+								'user_dict': {'k1': 'v1', 'k2': 'v2'}})
+		
+					
+				index.html
+				
+				<html>
+				..
+					<body>
+						<div>{{current_user}}</div>
+						
+						<a> {{ user_list.1 }} </a>
+						<a> {{ user_dict.k1 }} </a>
+						<a> {{ user_dict.k2 }} </a>
+						
+					</body>
+				
+				</html>
+			
+			###### 条件
+			
+				def func(request):
+					return render(request, "index.html", {
+								'current_user': "alex", 
+								"age": 18,
+								'user_list': ['alex','eric'], 
+								'user_dict': {'k1': 'v1', 'k2': 'v2'}})
+		
+					
+				index.html
+				
+				<html>
+				..
+					<body>
+						<div>{{current_user}}</div>
+						
+						<a> {{ user_list.1 }} </a>
+						<a> {{ user_dict.k1 }} </a>
+						<a> {{ user_dict.k2 }} </a>
+						
+						{% if age %}
+							<a>有年龄</a>
+							{% if age > 16 %}
+								<a>老男人</a>
+							{% else %}
+								<a>小鲜肉</a>
+							{% endif %}
+						{% else %}
+							<a>无年龄</a>
+						{% endif %}
+					</body>
+				
+				</html>
+	
+	
+	
+XXOO管理：
+	MySQL
+	SQLAlchemy
+	主机管理（8列）：
+		IP
+		端口
+		业务线
+		...
+		
+	用户表：
+		用户名
+		密码
+	
+	功能：
+		1、 登录
+		2、主机管理页面
+			- 查看所有的主机信息（4列）
+			- 增加主机信息（8列） ** 模态对话框
+		3、查看详细
+			url:
+				"detail" -> detail
+		
+			def detail(reqeust):
+				nid = request.GET.get("nid")
+				v = select * from tb where id = nid
+				...
+		4、删除
+			del_host -> delete_host
+			
+			def delete_host(request):
+				nid = request.POST.get('nid')
+				delete from tb where id = nid
+				return redirect('/home')
+
+
+
+
+上节内容回顾：
+	1、Django请求生命周期
+		-> URL对应关系（匹配） -> 视图函数 -> 返回用户字符串
+		-> URL对应关系（匹配） -> 视图函数 -> 打开一个HTML文件，读取内容
+		
+	2、创建django projcet
+
+		django-admin startproject mysite
+		
+
+		..
+		
+		mysite
+			mysite
+				- 配置文件
+				- url.py
+				- settings.py
+			
+		cd mysite
+		python manage.py startapp cmdb
+		
+		mysite
+			mysite
+				- 配置文件
+				- url.py
+				- settings.py
+			cmdb
+				- views.py
+				- admin.py
+				- models.py # 创建数据库表
+
+	3、配置
+		
+		模板路径
+		静态文件路径
+		# CSRF
+		
+	4、编写程序
+
+		a. url.py
+			
+			/index/    ->   func
+			
+		b. views.py
+			
+			def func(request):
+				# 包含所有的请求数据
+				...
+				return HttpResponse('字符串')
+				return render(request, 'index.html', {''})
+				retrun redirect('URL')
+				
+		c. 模板语言
+			return render(request, 'index.html', {'li': [11,22,33]})
+			
+			{% for item in li %}
+				<h1>{{item}}</h1>
+			{% endfor %}
+			
+			
+			***********  索引用点 **********
+			<h2> {{item.0 }} </h2>
+
+一、路由系统，URL
+	1、url(r'^index/', views.index),    
+	   url(r'^home/', views.Home.as_view()),
+	2、url(r'^detail-(\d+).html', views.detail),  
+	3、url(r'^detail-(?P<nid>\d+)-(?P<uid>\d+).html', views.detail)
+	   
+	   PS:
+			def detail(request, *args,**kwargs):
+				pass
+	
+	   实战：
+			a. 
+				url(r'^detail-(\d+)-(\d+).html', views.detail),
+				
+				def func(request, nid, uid):
+					
+					pass
+			
+				def func(request, *args):
+					args = (2,9)
+					
+					
+				def func(request, *args, **kwargs):
+					args = (2,9)
+	   
+			b. 
+				url(r'^detail-(?P<nid>\d+)-(?P<uid>\d+).html', views.detail)
+				
+				def func(request, nid, uid):
+					pass
+					
+				def funct(request, **kwargs):
+					kwargs = {'nid': 1, 'uid': 3}
+					
+				def func(request, *args, **kwargs):
+					args = (2,9)
+	4、 name
+		
+		对URL路由关系进行命名， ***** 以后可以根据此名称生成自己想要的URL *****
+		
+		url(r'^asdfasdfasdf/', views.index, name='i1'),
+		url(r'^yug/(\d+)/(\d+)/', views.index, name='i2'),
+		url(r'^buy/(?P<pid>\d+)/(?P<nid>\d+)/', views.index, name='i3'),
+		
+		
+		
+		def func(request, *args, **kwargs):
+			from django.urls import reverse
+			
+			url1 = reverse('i1')                              # asdfasdfasdf/
+			url2 = reverse('i2', args=(1,2,))                 # yug/1/2/
+			url3 = reverse('i3', kwargs={'pid': 1, "nid": 9}) # buy/1/9/
+		
+		
+		xxx.html
+			
+			{% url "i1" %}               # asdfasdfasdf/
+			{% url "i2" 1 2 %}           # yug/1/2/
+			{% url "i3" pid=1 nid=9 %}   # buy/1/9/
+		
+		注：
+			# 当前的URL
+			request.path_info 
+	5、多级路由
+		
+		project/urls.py
+			from django.conf.urls import url,include
+			from django.contrib import admin
+
+			urlpatterns = [
+				url(r'^cmdb/', include("app01.urls")),
+				url(r'^monitor/', include("app02.urls")),
+			]
+			
+		app01/urls.py
+			from django.conf.urls import url,include
+			from django.contrib import admin
+			from app01 import views
+
+			urlpatterns = [
+				url(r'^login/', views.login),
+			]
+			
+		app02/urls.py
+			from django.conf.urls import url,include
+			from django.contrib import admin
+			from app02 import views
+
+			urlpatterns = [
+				url(r'^login/', views.login),
+			]
+	
+	6、默认值（欠）
+	
+	7、命名空间（欠）
+	
+	
+二、视图
+	1、获取用户请求数据
+		request.GET
+		request.POST
+		request.FILES
+		PS:
+			GET:获取数据				
+			POST:提交数据
+			
+	2、checkbox等多选的内容
+		request.POST.getlist()
+	3、上传文件
+		# 上传文件,form标签做特殊设置
+		obj = request.FILES.get('fafafa')
+		obj.name
+		f = open(obj.name, mode='wb')
+		for item in obj.chunks():
+			f.write(item)
+		f.close()
+	
+	4、FBV & CBV
+	   function base view
+	   
+		url.py
+			index -> 函数名
+			
+		view.py
+			def 函数(request):
+				...
+		====》
+		/index/ -> 函数名
+			
+		/index/ -> 类
+		
+		====》
+		
+		建议：两者都用
+		
+	5、装饰器
+		欠
+
+	
+三、模板
+	
+	
+
+四、ORM操作
+	select * from tb where id > 1
+	# 对应关系
+	models.tb.objects.filter(id__gt=1)
+	models.tb.objects.filter(id=1)
+	models.tb.objects.filter(id__lt=1)
+	
+	创建类
+	
+	a. 先写类
+		from django.db import models
+
+		# app01_userinfo
+		class UserInfo(models.Model):
+			# id列，自增，主键
+			# 用户名列，字符串类型，指定长度
+			username = models.CharField(max_length=32)
+			password = models.CharField(max_length=64)
+		
+	b. 注册APP
+
+		INSTALLED_APPS = [
+			'django.contrib.admin',
+			'django.contrib.auth',
+			'django.contrib.contenttypes',
+			'django.contrib.sessions',
+			'django.contrib.messages',
+			'django.contrib.staticfiles',
+			'app01',
+		]
+	c. 执行命令
+		python manage.py  makemigrations
+		python manage.py  migrate
+		
+	d. ********** 注意 ***********
+		Django默认使用MySQLdb模块链接MySQL
+		主动修改为pymysql，在project同名文件夹下的__init__文件中添加如下代码即可：
+			import pymysql
+			pymysql.install_as_MySQLdb()
+	
+	1. 根据类自动创建数据库表
+		# app下的models.py
+	
+		python manage.py  makemigrations
+		python manage.py  migrate
+		
+		
+		字段：
+			字符串类型
+			
+			
+			数字
+			
+			
+			时间
+			
+			
+			二进制
+			
+			自增（primary_key=True）
+			
+		字段的参数：
+			null               -> db是否可以为空
+			default            -> 默认值
+			primary_key        -> 主键
+			db_column          -> 列名
+			db_index           -> 索引
+			unique			   -> 唯一索引
+			unique_for_date    -> 
+			unique_for_month
+			unique_for_year
+			auto_now           -> 创建时，自动生成时间
+			auto_now_add       -> 更新时，自动更新为当前时间
+			
+				# obj = UserGroup.objects.filter(id=1).update(caption='CEO')
+				# obj = UserGroup.objects.filter(id=1).first()
+				# obj.caption = "CEO"
+				# obj.save()
+				
+			choices			  -> django admin中显示下拉框，避免连表查询
+			blank             -> django admin是否可以为空
+			verbose_name      -> django admin显示字段中文
+			editable          -> django admin是否可以被编辑
+			error_messages    -> 错误信息欠
+			help_text         -> django admin提示
+			validators		  -> django form ,自定义错误信息（欠）
+			
+			
+			创建 Django 用户：python manage.py createsuperuser
+			
+			
+			
+			
+	2. 根据类对数据库表中的数据进行各种操作
+	
+		一对多：
+		
+			a. 外检
+			b. 
+				外键字段_id
+			c.
+				models.tb.object.create(name='root', user_group_id=1)
+				
+			d. 
+				
+				userlist = models.tb.object.all()
+				for row in userlist:
+					row.id
+					row.user_group_id
+					row.user_group.caption
+					
+					
+	=================== 作业：用户管理 ====================
+	1、用户组的增删改查
+	2、用户增删该查
+		- 添加必须是对话框
+		- 删除必须是对话框
+		- 修改，必须显示默认值
+		
+	3、比较好看的页面
+	
+	4、预习：
+		http://www.cnblogs.com/wupeiqi/articles/5246483.html
+
+
+1、Django请求的生命周期
+	武彦涛：
+		路由系统 -> 试图函数(获取模板+数据=》渲染) -> 字符串返回给用户
+		
+2、路由系统
+	王腾：
+		/index/                ->  函数或类.as_view()
+		/detail/(\d+)          ->  函数(参数) 或 类.as_view()（参数）
+		/detail/(?P<nid>\d+)   ->  函数(参数) 或 类.as_view()（参数）
+		/detail/			   ->  include("app01.urls")
+		/detail/    name='a1'  ->  include("app01.urls")
+							   - 视图中：reverse
+							   - 模板中：{% url "a1" %}
+							   
+3、视图
+	陈一波：
+	FBV：函数
+		def index(request,*args,**kwargs):
+			..
+	
+	CBV：类
+		class Home(views.View):
+			
+			def get(self,reqeust,*args,**kwargs):
+				..
+				
+	获取用户请求中的数据：
+		request.POST.get
+		request.GET.get
+		reqeust.FILES.get()
+		
+		# checkbox,
+		........getlist()
+		
+		request.path_info
+		
+		
+		文件对象 = reqeust.FILES.get()
+		文件对象.name
+		文件对象.size
+		文件对象.chunks()
+		
+		# <form 特殊的设置></form>
+		
+		
+	给用户返回数据：
+		render(request, "模板的文件的路径", {'k1': [1,2,3,4],"k2": {'name': '张扬','age': 73}})
+		redirect("URL")
+		HttpResponse(字符串)
+		
+	
+4、模板语言
+	冯国富：
+	肾阳
+	程表
+	高晓峰
+		render(request, "模板的文件的路径", {'obj': 1234, 'k1': [1,2,3,4],"k2": {'name': '张扬','age': 73}})
+	
+	<html>
+	
+	<body>
+		<h1> {{ obj }} </h1>
+		<h1> {{ k1.3 }} </h1>
+		<h1> {{ k2.name }} </h1>
+		{% for i in k1 %}
+			<p> {{ i }} </p>
+		{% endfor %}
+		
+		{% for row in k2.keys %}
+			{{ row }}
+		{% endfor %}
+		
+		{% for row in k2.values %}
+			{{ row }}
+		{% endfor %}
+		
+		{% for k,v in k2.items %}
+			{{ k }} - {{v}}
+		{% endfor %}
+		
+	</body>
+	</html>
+	
+5、ORM
+	吴世鹏
+	闫利鹏
+	a. 创建类和字段
+		class User(models.Model):
+			age = models.IntergerFiled()
+			name = models.CharField(max_length=10)#字符长度
+			
+		Python manage.py makemigrations
+		python manage.py migrate
+		
+		# settings.py 注册APP
+		
+	b. 操作
+		王赛鹏
+		
+		增
+			models.User.objects.create(name='qianxiaohu',age=18)
+			dic = {'name': 'xx', 'age': 19}
+			models.User.objects.create(**dic)
+			
+			
+			obj = models.User(name='qianxiaohu',age=18)
+			obj.save()
+		删
+			models.User.objects.filter(id=1).delete()
+		改
+			models.User.objects.filter(id__gt=1).update(name='alex',age=84)
+			dic = {'name': 'xx', 'age': 19}
+			models.User.objects.filter(id__gt=1).update(**dic)
+		查
+			models.User.objects.filter(id=1,name='root')
+			models.User.objects.filter(id__gt=1,name='root')
+			models.User.objects.filter(id__lt=1)
+			models.User.objects.filter(id__gte=1)
+			models.User.objects.filter(id__lte=1)
+			
+			models.User.objects.filter(id=1,name='root')
+			dic = {'name': 'xx', 'age__gt': 19}
+			models.User.objects.filter(**dic)
+			
+			v1 = models.Business.objects.all()
+			# QuerySet ,内部元素都是对象
+			
+			# QuerySet ,内部元素都是字典
+			v2 = models.Business.objects.all().values('id','caption')
+			# QuerySet ,内部元素都是元组
+			v3 = models.Business.objects.all().values_list('id','caption')
+		
+			# 获取到的一个对象，如果不存在就报错
+			models.Business.objects.get(id=1)
+			对象或者None = models.Business.objects.filter(id=1).first()
+			
+			
+			外键：
+				v = models.Host.objects.filter(nid__gt=0)
+				v[0].b.caption  ---->  通过.进行跨表
+				
+				
+				
+			
+		
+		
+		外键：
+			class UserType(models.Model):
+				caption = models.CharField(max_length=32)
+		      id  caption
+			# 1，普通用户
+			# 2，VIP用户
+			# 3， 游客
+				
+			class User(models.Model):
+				age = models.IntergerFiled()
+				name = models.CharField(max_length=10)#字符长度
+				# user_type_id = models.IntergerFiled() # 约束，
+				user_type = models.ForeignKey("UserType",to_field='id') # 约束，
+		
+			  name age  user_type_id     
+			# 张扬  18     3
+			# 张A扬 18     2
+			# 张B扬 18     2
+	
+	
+	
+	
+张扬：
+	position:fixed absolute relative
+
+	
+	
+	
+	Ajax
+	
+		$.ajax({
+			url: '/host',
+			type: "POST",
+			data: {'k1': 123,'k2': "root"},
+			success: function(data){
+				// data是服务器端返回的字符串
+				var obj = JSON.parse(data);
+			}
+		})
+		
+	
+		建议：永远让服务器端返回一个字典
+		
+		return HttpResponse(json.dumps(字典))
+		
+		
+		
+			
+多对多：
+    创建多对多：
+		方式一：自定义关系表
+			class Host(models.Model):
+				nid = models.AutoField(primary_key=True)
+				hostname = models.CharField(max_length=32,db_index=True)
+				ip = models.GenericIPAddressField(protocol="ipv4",db_index=True)
+				port = models.IntegerField()
+				b = models.ForeignKey(to="Business", to_field='id')
+			# 10
+			class Application(models.Model):
+				name = models.CharField(max_length=32)
+			# 2
+			
+			class HostToApp(models.Model):
+				hobj = models.ForeignKey(to='Host',to_field='nid')
+				aobj = models.ForeignKey(to='Application',to_field='id')
+				
+			# HostToApp.objects.create(hobj_id=1,aobj_id=2)
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+		方式二：自动创建关系表
+			class Host(models.Model):
+				nid = models.AutoField(primary_key=True)
+				hostname = models.CharField(max_length=32,db_index=True)
+				ip = models.GenericIPAddressField(protocol="ipv4",db_index=True)
+				port = models.IntegerField()
+				b = models.ForeignKey(to="Business", to_field='id')
+			# 10
+			class Application(models.Model):
+				name = models.CharField(max_length=32)
+				r = models.ManyToManyField("Host")
+				
+			无法直接对第三张表进行操作
+			
+			obj = Application.objects.get(id=1)
+			obj.name
+			
+			# 第三张表操作
+			obj.r.add(1)
+			obj.r.add(2)
+			obj.r.add(2,3,4)
+			obj.r.add(*[1,2,3,4])
+			
+			obj.r.remove(1)
+			obj.r.remove(2,4)
+			obj.r.remove(*[1,2,3])
+			
+			obj.r.clear()
+			
+			obj.r.set([3,5,7])
+			
+			# 所有相关的主机对象“列表” QuerySet
+			obj.r.all()
+			
+		
+	
+	
+
+上节内容回顾：
+	1、请求周期
+		url> 路由 > 函数或类 > 返回字符串或者模板语言？
+		
+		Form表单提交：
+			提交 -> url > 函数或类中的方法 
+								- ....
+								HttpResponse('....')
+								render(request,'index.html')
+								redirect('/index/')
+		     用户  <    <  返回字符串
+			 (当接受到redirect时)自动发起另外一个请求
+			 --> url   .....
+			 
+		Ajax:
+			$.ajax({
+				url: '/index/',
+				data: {'k': 'v', 'list': [1,2,3,4], 'k3': JSON.stringfy({'k1': 'v'}))}, $(form对象).serilize() 
+				type: 'POST',
+				dataType: 'JSON':
+				traditional: true,
+				success：function(d){
+					location.reload()              # 刷新
+					location.href = "某个地址"     # 跳转
+				}
+			})
+			提交 -> url -> 函数或类中的方法 
+							HttpResponse('{}')
+							render(request, 'index.html', {'name': 'v1'})
+							<h1>{{ name }}</h1> --> 
+							<h1>v1</h1>
+							
+							XXXXXXX redirect...
+			用户	<<<<<  字符串
+		
+	
+	2、路由系统URL
+		a. /index/                               ->  函数或类
+		b. /index/(\d+)                   		 ->  函数或类
+		c. /index/(?P<nid>\d+)  				 ->  函数或类
+		d. /index/(?P<nid>\d+) name='root' 		 ->  函数或类
+			reverse()
+			{% url 'root' 1%}
+		e. /crm/    include('app01.urls')        -> 路由分发
+		
+		f. 默认值
+			url(r'^index/', views.index, {'name': 'root'}),
+		
+			def index(request,name):
+				print(name)
+				return HttpResponse('OK')
+	
+		g. 命名空间
+			
+			/admin/    include('app01.urls',namespace='m1')
+			/crm/      include('app01.urls',namespace='m1')
+			
+			app01.urls
+			/index/    name = 'n1'
+			
+			
+			reverser('m1:n1')
+	
+	3、
+		def func(request):
+			request.POST
+			request.GET
+			request.FILES
+			request.getlist
+			request.method
+			request.path_info
+			
+			return render,HttpResponse,redirect
+			
+	4、
+		render(request, 'index.html')
+		# for
+		# if
+		# 索引.   keys  values items    all
+		
+	5、
+		class User(models.Model):
+			username = models.CharField(max_length=32)
+			email = models.EmailField()
+			
+		有验证功能
+			Django Admin
+		无验证功能：
+			User.objects.create(username='root',email='asdfasdfasdfasdf')
+			User.objects.filter(id=1).update(email='666')
+		
+		
+		
+		class UserType(models.Model):
+			name = models.CharField(max_length=32)
+		
+		
+		class User(models.Model):
+			username = models.CharField(max_length=32)
+			email = models.EmailField()
+			user_type = models.ForeignKey("UserType")
+		
+		user_list = User.objects.all()
+		for obj user_list:
+			obj.username,obj.email,obj.user_type_id,obj.user_type.name,obj.user_type.id
+		
+		user = User.objects.get(id=1)
+		user.
+		
+		User.objects.all().values("username","user_type__name",)
+		
+		
+		
+		class UserType(models.Model):
+			name = models.CharField(max_length=32)
+		
+		
+		class User(models.Model):
+			username = models.CharField(max_length=32)
+			email = models.EmailField()
+			user_type = models.ForeignKey("UserType")
+			m = models.ManyToMany('UserGroup')
+			
+			
+		class UserGroup(models.Model):
+			name = ....
+			
+			
+		obj = User.objects.get(id=1)
+		obj.m.add(2)
+		obj.m.add(2,3)
+		obj.m.add(*[1,2,3])
+		
+		obj.m.remove(...)
+		
+		obj.m.clear()
+		
+		
+		obj.m.set([1,2,3,4,5])
+		
+		# 多个组，UserGroup对象
+		obj.m.all()
+		obj.m.filter(name='CTO')
+		
+		
+		
+知识点：
+	URL
+		- 两个
+	Views
+		- 请求的其他信息
+		from django.core.handlers.wsgi import WSGIRequest
+		request.environ
+		request.environ['HTTP_USER_AGENT']
+		- 装饰器
+			FBV:
+				def auth(func):
+					def inner(reqeust,*args,**kwargs):
+						v = reqeust.COOKIES.get('username111')
+						if not v:
+							return redirect('/login/')
+						return func(reqeust, *args,**kwargs)
+					return inner
+		
+			CBV:
+				from django import views
+				from django.utils.decorators import method_decorator
+
+				@method_decorator(auth,name='dispatch')
+				class Order(views.View):
+
+					# @method_decorator(auth)
+					# def dispatch(self, request, *args, **kwargs):
+					#     return super(Order,self).dispatch(request, *args, **kwargs)
+
+					# @method_decorator(auth)
+					def get(self,reqeust):
+						v = reqeust.COOKIES.get('username111')
+						return render(reqeust,'index.html',{'current_user': v})
+
+					def post(self,reqeust):
+						v = reqeust.COOKIES.get('username111')
+						return render(reqeust,'index.html',{'current_user': v})
+	Templates
+		- 母版...html
+			extends
+			include
+		- 自定义函数
+			simple_tag
+				a. app下创建templatetags目录
+				b. 任意xxoo.py文件
+				c. 创建template对象 register
+				d. 
+					@register.simple_tag
+					def func(a1,a2,a3....)
+						return "asdfasd"
+				e. settings中注册APP
+				f. 顶部 {% load xxoo %}
+				g. {% 函数名 arg1 arg2 %}
+				缺点：
+					不能作为if条件
+				优点：
+					参数任意
+			filter
+				a. app下创建templatetags目录
+				b. 任意xxoo.py文件
+				c. 创建template对象 register
+				d. 
+					@register.filter
+					def func(a1,a2)
+						return "asdfasd"
+				e. settings中注册APP
+				f. 顶部 {% load xxoo %}
+				g. {{ 参数1|函数名:"参数二，参数三" }} {{ 参数1|函数名:数字 }}
+				缺点：
+					最多两个参数，不能加空格
+				优点：
+					能作为if条件
+			
+	分页（自定义的分页）
+		
+		XSS：
+			{{ page_str|safe }}
+			
+			mark_safe(page_str)
+	
+	cookie
+		客户端浏览器上的一个文件
+			{"user": 'dachengzi'}
+	
+	session ：装饰器
+		
+	
+	Models
+		- 一大波操作
+		
+	Form验证
+		-
+	缓存
+	中间件
+	信号
+	CSRF
+	Admin/ModelForm
+		
+作业：
+	主机管理：
+		1、单表操作
+		2、一对多
+		3、多对多
+		要求：
+			a. 删除对话框
+			b. 修改，添加新URL
+			c. 基于cookie进行用户认证
+			d. 定制显示个数
+			e. 分页
+	预习：
+		Form： http://www.cnblogs.com/wupeiqi/articles/6144178.html
+		Model：http://www.cnblogs.com/wupeiqi/articles/6216618.html
+
+知识点概要
+    - Session
+    - CSRF
+    - Model操作
+    - Form验证（ModelForm）
+    - 中间件
+    - 缓存
+    - 信号
+
+
+内容详细：
+
+1. Session
+	基于Cookie做用户验证时：敏感信息不适合放在cookie中
+	
+
+    a. Session原理
+		Cookie是保存在用户浏览器端的键值对
+		Session是保存在服务器端的键值对
+	
+    b. Cookie和Session对比
+    
+    c. Session配置(缺少cache)
+    
+    d. 示例：实现两周自动登陆
+            - request.session.set_expiry(60*10)
+            - SESSION_SAVE_EVERY_REQUEST = True
+
+    PS: cookie中不设置超时时间，则表示关闭浏览器自动清除
+	
+	
+	- session依赖于cookie
+	- 服务器session
+		request.session.get()
+		request.session[x] = x
+		
+		request.session.clear()
+		
+	- 配置文件中设置默认操作（通用配置）：
+		SESSION_COOKIE_NAME ＝ "sessionid"                       # Session的cookie保存在浏览器上时的key，即：sessionid＝随机字符串（默认）
+		SESSION_COOKIE_PATH ＝ "/"                               # Session的cookie保存的路径（默认）
+		SESSION_COOKIE_DOMAIN = None                             # Session的cookie保存的域名（默认）
+		SESSION_COOKIE_SECURE = False                            # 是否Https传输cookie（默认）
+		SESSION_COOKIE_HTTPONLY = True                           # 是否Session的cookie只支持http传输（默认）
+		SESSION_COOKIE_AGE = 1209600                             # Session的cookie失效日期（2周）（默认）
+		SESSION_EXPIRE_AT_BROWSER_CLOSE = False                  # 是否关闭浏览器使得Session过期（默认）
+		# set_cookie('k',123)
+		SESSION_SAVE_EVERY_REQUEST = False                       # 是否每次请求都保存Session，默认修改之后才保存（默认）
+
+	- 引擎的配置
+	
+
+2. CSRF
+    a. CSRF原理
+
+    b. 无CSRF时存在隐患
+
+    c. Form提交（CSRF）
+
+    d. Ajax提交（CSRF）
+       CSRF请求头 X-CSRFToken
+	   
+	   
+6. 中间件
+
+7. 缓存
+	5种配置
+	3种应用：
+		全局
+		视图函数
+		模板
+
+8. 信号
+    - 内置信号
+	- 自定义
+		 - 定义信号
+		 - 出发信号
+		 - 信号中注册函数
+	
+3. Model操作
+    
+    a. 字段类型 + 参数
+
+    b. 连表字段 + 参数
+
+    c. Meta
+
+    d. SQL操作：
+        - 基本增删改查
+        - 进阶操作
+        - 正反查询
+        - 其他操作
+
+    e. 验证（弱）
+
+4. Form操作
+	完成：
+		- 验证用户请求
+		- 生成HTML
+		  （保留上一次提交的数据）
+		
+	自定义：
+		- 类
+		- 字段（校验）
+		- 插件（生成HTML）
+		
+	初始化操作：
+		
+	
+	
+============= 作业:xxxoo管理 =============
+用户验证：session
+新URL：Form验证
+中间件：IP过滤
+信号：记录操作
+CSRF：
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+    a. Form验证用户请求
+
+    b. Form生成HTML
+
+    c. Form字段详细（自定义字段，Model...） + 插件
+
+    d. 自定义验证(钩子以及__all__)
+
+    e. 注册示例：
+         用户名、密码、邮箱、手机号（RegexValidator或RegexField）、性别、爱好、城市
+    
+    f. 初始化值
+
+5. ModelForm
+
+    a. Model+Form功能集合
+
+    b. save
+
+    c. save + save_m2m
+
+
+
+
+
+
+
+
+
+-----------------------------------------
+
+内容回顾：
+	
+	Model
+		- 数据库操作
+		- 验证
+		class A(MOdel):
+			user = 
+			email = 
+			pwd = 
+		
+	Form
+		- class LoginForm(Form): 
+			email = fields.EmailField()
+			user = 
+			pwd = 
+			
+		- is_valid -> 每一个字段进行正则(字段内置正则)+clean_字段 -> clean(__all__)  -> _post_clean
+		- cleand_data
+		- error
+	--------> 推荐 <---------
+		
+一、ModelForm
+	参考博客：
+		http://www.cnblogs.com/wupeiqi/articles/6229414.html
+	
+	Model + Form => 验证 + 数据库操作
+	- class LoginModelForm(xxxxx): 
+		 利用model.A中的字段
+		 
+		 
+	1. 生成HTML标签：class Meta: ...
+	2. mf = xxxModelForm(instance=ModelObj)
+	3. 额外的标签， is_rmb = Ffields.CharField(widget=Fwidgets.CheckboxInput())
+	4. 各种验证 is_valid() -> 各种钩子...
+	5. 	mf.save()
+		# 或
+		instance = mf.save(False)
+		instance.save()
+		mf.save_m2m()
+	
+
+二、Ajax
+	参考博客：
+		http://www.cnblogs.com/wupeiqi/articles/5703697.html
+	
+	原生
+		
+	jQuery
+	
+	伪Ajax操作
+	
+	时机：
+		如果发送的是【普通数据】 -> jQuery，XMLHttpRequest，iframe
+	
+三、文件上传（预览）
+	
+	- Form提交
+	- Ajax上传文件
+	
+	时机：
+		如果发送的是【文件】 -> iframe,jQuery(FormData)，XMLHttpRequest(FormData)，
+	
+	
+	
+四、图片验证码 + Session
+	
+	- session
+	- check_code.py(依赖：Pillow,字体文件)
+	- src属性后面加?
+
+
+
+五、CKEditor,UEEditor，TinyEditor,KindEditor(***)
+	参考博客：
+		http://www.cnblogs.com/wupeiqi/articles/6307554.html
+		
+	- 基本使用
+	- 文件上传，多文件上传，文件空间管理
+	- XSS攻击(过滤的函数或类) 下节课说...
+	
+作业（）：
+
+	主站：
+		http://127.0.0.1:8000/   				博客首页
+		http://127.0.0.1:8000/zhaofan/1.html	某人的某篇博客
+	个人博客：
+		http://127.0.0.1:8000/zhaofan.html					某人的博客
+		http://127.0.0.1:8000/zhaofan/tag/python.html		某人的博客筛选
+		http://127.0.0.1:8000/zhaofan/catetory/mvc.html		某人的博客筛选
+		http://127.0.0.1:8000/zhaofan/date/2011-11.html		某人的博客筛选
+	个人后台管理：
+		http://127.0.0.1:8000/backend/base-info.html
+		http://127.0.0.1:8000/backend/tag.html
+		http://127.0.0.1:8000/backend/category.html
+		http://127.0.0.1:8000/backend/article.html
+		http://127.0.0.1:8000/backend/add-article.html
+
+
+	- 博客
+		- KindEditor
+			- beautifulsoup4对标签进行过滤
+			- 单例模式
+			
+		- 事务操作
+			 - from django.db import transaction
+		
+		- 筛选条件
+			 - 利用数据库内置函数实现筛选
+			 
+			 
+		作业：
+			- 示例
+			- 评论和点赞
+		
+		pip3 install beautifulsoup4
+		
+	- CMDB
+		1. 资产自动收集
+		2. API URL
+		3. 可视化管理
+		
+		
+		1. 资产自动收集
+			- paramiko，ansible，fabric
+			  通过API获取主机名，利用paramiko链接服务获取数据，解析成字典
+			  优点：无依赖
+			  缺点：慢
+			- saltstack
+			  通过API获取主机名，利用salt api链接服务获取数据，解析成字典
+			  优点：无依赖
+			  缺点：有点慢
+			  - pillar
+			- puppet
+			  - 知识概要：
+				master
+				slave: certname
+				slave: certname
+				配置文件：30分钟 master和slave进行一次连接
+				
+			  - report报表
+				配置文件
+				  report: cmdb  # 每30分钟交互时，回执行制定目录的下cmdb.rb文件中的process函数
+		      - 自定义factor
+			  
+			- Agent
+				- 缺点：每台有agent
+				- 优点：快
+				v = subprocess.getoutput('hostname')
+			
+		     
+			===================== 执行shell命令[网卡][硬盘]...，获取结果 =======================
+			
+			
+	
+		
+	- JSONP - 棘手的问题
+		import requests
+		request.get('http://www.baidu.com')
+		request.post('http://www.baidu.com')
+		
+		由于浏览器具有同源策略（阻止Ajax请求，无法阻止<script src='...'></script>）
+		巧妙：
+			- 创建script标签
+			- src=远程地址
+			- 返回的数据必须是js格式
+		只能发GET请求
+
+
+
